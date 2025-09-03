@@ -21,7 +21,28 @@ namespace SeleniumDemo
         public static readonly By UserDropdown = By.CssSelector(".oxd-userdropdown-tab");
         public static readonly By LogoutLink = By.XPath("//a[text()='Logout']");
 
+        [Test]
+        public void TC04_PerformAddUser()
+        {
 
+            LoginPage loginpage = new LoginPage(driver);
+            loginpage.DoLogin("Admin", "admin123");
+
+            wait.Until(e => e.FindElement(DashboardPage.PIMModule)).Click();
+            Thread.Sleep(5000);
+            wait.Until(e => e.FindElement(DashboardPage.AddEmployee)).Click();
+            Thread.Sleep(5000);
+            driver.FindElement(DashboardPage.firstName).SendKeys("Harsh");
+            Thread.Sleep(5000);
+            driver.FindElement(DashboardPage.lastName).SendKeys("Vardhan");
+            Thread.Sleep(5000);
+            driver.FindElement(DashboardPage.empId).SendKeys("12345");
+            Thread.Sleep(5000);
+
+            driver.FindElement(DashboardPage.saveBtn).Click();
+            Thread.Sleep(5000);
+
+         }
 
         [Test]
         public void TC03_PerformLogoutAndValidateReturnToLogin()

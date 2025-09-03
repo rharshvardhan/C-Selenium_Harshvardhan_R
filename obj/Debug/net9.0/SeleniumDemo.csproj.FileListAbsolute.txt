@@ -177,3 +177,4 @@
 /Users/harshvardhanr/Desktop/C# selenium/SeleniumDemo/bin/Debug/net9.0/zh-Hant/Microsoft.VisualStudio.TestPlatform.Common.resources.dll
 /Users/harshvardhanr/Desktop/C# selenium/SeleniumDemo/obj/Debug/net9.0/SeleniumDemo.gentestingplatformentrypointinputcache.cache
 /Users/harshvardhanr/Desktop/C# selenium/SeleniumDemo/obj/Debug/net9.0/SeleniumDemo.genautoregisteredextensionsinputcache.cache
+/Users/harshvardhanr/Desktop/C# selenium/SeleniumDemo/obj/Debug/net9.0/SeleniumDemo.sourcelink.json
