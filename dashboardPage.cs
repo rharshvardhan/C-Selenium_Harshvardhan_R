@@ -28,6 +28,9 @@ namespace TestProject2
         public static readonly By lastName = By.XPath("//input[@name='lastName']"); //new one
         public static readonly By empId = By.XPath("//label[text()='Employee Id']/../following-sibling::div//input[@class='oxd-input oxd-input--active']"); // new one
         public static readonly By saveBtn = By.XPath("//button[normalize-space()='Save']"); // new one
+        public static readonly By time = By.XPath("//span[text()='Time']");
+        public static readonly By tinesheetInput = By.XPath("//input[@placeholder='Type for hints...']"); // new one
+        public static readonly By viewButton = By.XPath("//button[text()=' View ']");
 
         public DashboardPage(IWebDriver driver)
         {

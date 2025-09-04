@@ -43,6 +43,19 @@ namespace SeleniumDemo
             Thread.Sleep(5000);
 
          }
+        [Test]
+        public void TC05_PerformTimesheetCheck()
+        {
+            LoginPage loginpage = new LoginPage(driver);
+            loginpage.DoLogin("Admin", "admin123");
+
+            wait.Until(e => e.FindElement(DashboardPage.time)).Click();
+            Thread.Sleep(5000);
+            driver.FindElement(DashboardPage.tinesheetInput).SendKeys("manda akhil user");
+            Thread.Sleep(5000);
+            wait.Until(e => e.FindElement(DashboardPage.viewButton)).Click();
+            Thread.Sleep(5000);
+         }
 
         [Test]
         public void TC03_PerformLogoutAndValidateReturnToLogin()
