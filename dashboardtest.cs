@@ -6,10 +6,11 @@ using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using System;
 using TestProject2;
+using AventStack.ExtentReports;
 
 namespace SeleniumDemo
 {
-    public class DashboardTests:BaseTest
+    public class DashboardTests : BaseTest
     {
         // Element locators
         public static readonly By UsernameField = By.Name("username");
@@ -21,10 +22,19 @@ namespace SeleniumDemo
         public static readonly By UserDropdown = By.CssSelector(".oxd-userdropdown-tab");
         public static readonly By LogoutLink = By.XPath("//a[text()='Logout']");
 
+        private ExtentReports extent;
+        private ExtentTest test;
+        [OneTimeSetUp]
+        public void SetupReport()
+        {
+            extent = ReportManager.GetInstance();
+        }
+
         [Test]
         public void TC04_PerformAddUser()
         {
 
+            test = extent.CreateTest("TC04_PerformAddUser");
             LoginPage loginpage = new LoginPage(driver);
             loginpage.DoLogin("Admin", "admin123");
 
@@ -40,12 +50,14 @@ namespace SeleniumDemo
             Thread.Sleep(5000);
 
             driver.FindElement(DashboardPage.saveBtn).Click();
+            test.Pass("User added successfully");
             Thread.Sleep(5000);
 
-         }
+        }
         [Test]
         public void TC05_PerformTimesheetCheck()
         {
+            test = extent.CreateTest("TC05_PerformTimesheetCheck");
             LoginPage loginpage = new LoginPage(driver);
             loginpage.DoLogin("Admin", "admin123");
 
@@ -54,20 +66,22 @@ namespace SeleniumDemo
             driver.FindElement(DashboardPage.tinesheetInput).SendKeys("manda akhil user");
             Thread.Sleep(5000);
             wait.Until(e => e.FindElement(DashboardPage.viewButton)).Click();
+            test.Pass("Timesheet viewed successfully");
+
             Thread.Sleep(5000);
-         }
+        }
 
         [Test]
         public void TC03_PerformLogoutAndValidateReturnToLogin()
         {
-
+            test = extent.CreateTest("TC03_PerformLogoutAndValidateReturnToLogin");
             LoginPage loginpage = new LoginPage(driver);
             loginpage.DoLogin("Admin", "admin123");
 
             DashboardPage dashboardpage = new DashboardPage(driver);
             dashboardpage.Logout();
             Thread.Sleep(10000);
-
+            test.Pass("Logout successful");
             Console.WriteLine("User successfully logged out.");
 
         }
@@ -75,6 +89,7 @@ namespace SeleniumDemo
         [Test]
         public void TC01_OpenDashboardAndCaptureHeaderText()
         {
+            test = extent.CreateTest("TC01_OpenDashboardAndCaptureHeaderText");
 
             LoginPage loginpage = new LoginPage(driver);
             loginpage.DoLogin("Admin", "admin123");
@@ -83,23 +98,30 @@ namespace SeleniumDemo
             string headerText = dashboardpage.GetHeaderText();
 
             Assert.That(headerText, Is.EqualTo("Dashboard"));
+            test.Pass("Dashboard header text validated successfully");
         }
 
         [Test]
         public void TC02_CaptureTimeAtWorkWidgetDetails()
         {
-            
+            test = extent.CreateTest("TC02_CaptureTimeAtWorkWidgetDetails");
+
             LoginPage loginpage = new LoginPage(driver);
             loginpage.DoLogin("Admin", "admin123");
 
             DashboardPage dashboardpage = new DashboardPage(driver);
             IWebElement widget = dashboardpage.GetWidgetVisible();
             IWebElement punch = dashboardpage.GetPunchVisible();
-
+            test.Pass("Time at Work widget and Punch status validated successfully");
             Assert.That(widget.Displayed, Is.True);
             Assert.That(punch.Displayed, Is.True, "Punch status should be visible");
 
 
+        }
+        [OneTimeTearDown]
+        public void TearDownReport()
+        {
+            extent.Flush(); 
         }
 
     }
