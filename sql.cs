@@ -1,45 +1,72 @@
 using System;
-//using MySql.Data.MySqlClient;  // Uncomment when DB is installed
+// using MySql.Data.MySqlClient;  // Uncomment when DB is installed
 
 namespace TestAutomation.Helpers
 {
     public class SQLHelper
     {
-        // this is dummy connection string
+        // Dummy connection string (replace when DB available)
         private static string connectionString = "server=localhost;database=employeeDB;user=root;password=yourpassword;";
 
-        // Dummy Fetch Example
-        public static void FetchEmployee(string employeeName)
+        // --- Fetch URL ---
+        public static string GetURL()
         {
-            Console.WriteLine($"-- Dummy SQL Command --");
-            Console.WriteLine($"SELECT * FROM employees WHERE name = '{employeeName}';");
-            
-            // Real code (enable when MySQL available):
+            Console.WriteLine("-- Dummy SQL Command --");
+            Console.WriteLine("SELECT url FROM application_urls WHERE id = 1;");
+
+            // Return dummy value for now
+            return "https://opensource-demo.orangehrmlive.com/";
+
             /*
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = $"SELECT * FROM employees WHERE name='{employeeName}'";
+                string query = "SELECT url FROM application_urls WHERE id = 1";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
-                MySqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    Console.WriteLine(reader["name"].ToString());
-                }
+                object result = cmd.ExecuteScalar();
+                return result?.ToString();
             }
             */
         }
 
-        public static void FetchURL(string url)
+        // --- Fetch Username ---
+        public static string GetUsername()
         {
-            Console.WriteLine($"-- Dummy SQL Command --");
-            Console.WriteLine($"SELECT * FROM application_urls WHERE url = '{url}';");
+            Console.WriteLine("-- Dummy SQL Command --");
+            Console.WriteLine("SELECT username FROM users WHERE id = 1;");
+
+            return "Admin"; // dummy
+
+            /*
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT username FROM users WHERE id = 1";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                object result = cmd.ExecuteScalar();
+                return result?.ToString();
+            }
+            */
         }
 
-        public static void FetchInputData(string inputField, string value)
+        // --- Fetch Password ---
+        public static string GetPassword()
         {
-            Console.WriteLine($"-- Dummy SQL Command --");
-            Console.WriteLine($"SELECT * FROM test_inputs WHERE {inputField} = '{value}';");
+            Console.WriteLine("-- Dummy SQL Command --");
+            Console.WriteLine("SELECT password FROM users WHERE id = 1;");
+
+            return "admin123"; // dummy
+
+            /*
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT password FROM users WHERE id = 1";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                object result = cmd.ExecuteScalar();
+                return result?.ToString();
+            }
+            */
         }
     }
 }

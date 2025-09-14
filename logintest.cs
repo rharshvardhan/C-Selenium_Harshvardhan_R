@@ -23,10 +23,9 @@ namespace ConsoleApp2
             string password = ExcelUtils.ReadCell("TestData.xlsx", "Sheet1", 1, 2);
 
             // FOR SQL data fetching uncomment below and comment above Excel lines
-            /* string url = SqlUtils.GetValue("SELECT Url, Username, Password FROM TestData WHERE Id=1", "Url");
-            string username = SqlUtils.GetValue("SELECT Url, Username, Password FROM TestData WHERE Id=1", "Username");
-            string password = SqlUtils.GetValue("SELECT Url, Username, Password FROM TestData WHERE Id=1", "Password"); */
-            
+            /*  string url = SQLHelper.GetURL();
+              string username = SQLHelper.GetUsername();
+              string password = SQLHelper.GetPassword(); */
             driver.Manage().Window.Maximize();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
             LoginPage loginPage = new LoginPage(driver);
