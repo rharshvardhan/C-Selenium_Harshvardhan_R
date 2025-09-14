@@ -9,6 +9,7 @@ public static class ReportManager
     {
         if (extent == null)
         {
+            
             var htmlReporter = new ExtentSparkReporter("TestReport.html");
             extent = new ExtentReports();
             extent.AttachReporter(htmlReporter);

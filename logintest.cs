@@ -1,67 +1,61 @@
 using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.BiDi.Communication;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Edge;
-using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
 using AventStack.ExtentReports;
-
-using System.Threading;
 using TestProject2;
-
 namespace ConsoleApp2
 {
     public class LoginTests : BaseTest
     {
         private ExtentReports extent;
         private ExtentTest test;
+
         [OneTimeSetUp]
         public void SetupReport()
         {
             extent = ReportManager.GetInstance();
         }
-        [Test]
 
+        [Test]
         public void LoginAsValidUser()
         {
-            test = extent.CreateTest("LoginAsValidUser"); 
-            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            test = extent.CreateTest("LoginAsValidUser");
+            string url = ExcelUtils.ReadCell("TestData.xlsx", "Sheet1", 1, 0);
+            string username = ExcelUtils.ReadCell("TestData.xlsx", "Sheet1", 1, 1);
+            string password = ExcelUtils.ReadCell("TestData.xlsx", "Sheet1", 1, 2);
+
+            // FOR SQL data fetching uncomment below and comment above Excel lines
+            /* string url = SqlUtils.GetValue("SELECT Url, Username, Password FROM TestData WHERE Id=1", "Url");
+            string username = SqlUtils.GetValue("SELECT Url, Username, Password FROM TestData WHERE Id=1", "Username");
+            string password = SqlUtils.GetValue("SELECT Url, Username, Password FROM TestData WHERE Id=1", "Password"); */
+            
             driver.Manage().Window.Maximize();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-            LoginPage loginpage = new LoginPage(driver);
-            loginpage.DoLogin("Admin", "admin123");
-         test.Pass("Login successful with valid user");
-
-            Thread.Sleep(10000);
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.DoLogin(url, username, password);
+            test.Pass("Login successful with valid user");
+            
         }
-
-
 
         [Test]
-
-        public void LoginAsInValidUser()
+        public void LoginAsInvalidUser()
         {
-            test = extent.CreateTest("LoginAsInValidUser"); 
-
-            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+          test = extent.CreateTest("LoginAsInvalidUser");
+          string  url = ExcelUtils.ReadCell("TestData.xlsx", "Sheet1", 1, 0);
+          string username = ExcelUtils.ReadCell("TestData.xlsx", "Sheet1", 1, 1);
+          string password = ExcelUtils.ReadCell("TestData.xlsx", "Sheet1", 1, 3);
             driver.Manage().Window.Maximize();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-            LoginPage loginpage = new LoginPage(driver);
-            loginpage.DoLogin("Admin", "invalid123");
-            string errorText = loginpage.getErrorText();
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.DoLogin(url, username, password);
+            string errorText = loginPage.GetErrorText();
             test.Pass("Login attempt with invalid user completed");
-            Assert.That(errorText, Is.EqualTo("Invalid credentials"), "Error message should be invalid credentials");
-            Thread.Sleep(10000);
+            Assert.That(errorText, Is.EqualTo("Invalid credentials"));
+            
         }
-        public void Dispose()
-        {
 
-        }
-         [OneTimeTearDown]
+        [OneTimeTearDown]
         public void TearDownReport()
         {
-            extent.Flush(); 
+            extent.Flush();
         }
     }
 }

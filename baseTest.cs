@@ -2,17 +2,9 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Support.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NUnit.Framework;
-
-using System.Threading.Tasks;
-
 namespace TestProject2
 {
-    
     public class BaseTest
     {
         protected IWebDriver? driver;
